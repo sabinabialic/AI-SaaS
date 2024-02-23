@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Montserrat } from "next/font/google";
 
 import { cn } from "@/lib/utils";
-import { Code2Icon, CodeSquare, ImagesIcon, LayoutDashboard, LucideSettings, MessageCircle, Music2Icon, Settings2Icon, SettingsIcon, VideoIcon, VideotapeIcon } from "lucide-react";
+import { Code2Icon, ImagesIcon, LayoutDashboard, MessageCircle, Music2Icon, SettingsIcon, VideoIcon } from "lucide-react";
 
 const montserrat = Montserrat({weight: "600", subsets: ["latin"]});
 
@@ -79,7 +79,6 @@ const Sidebar = () => {
                                 <route.icon className={cn("h-4 w-4 mr-4", route.color)} />
                                 {route.label}
                             </div>
-
                         </Link>
                     ))}
                 </div>
