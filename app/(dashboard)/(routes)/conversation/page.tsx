@@ -88,7 +88,9 @@ const ConversationPage = () => {
                     <div className="flex flex-col-reverse gap-y-4">
                         {messages.map((message, index) => (
                             <div key={index}>
+                                <div className={`${ message.role === 'user' ? 'text-gray-500' : 'text-gray-800'}`} >
                                     {message.content}
+                                </div>
                             </div>
                         ))}
                     </div>
