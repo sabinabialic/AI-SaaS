@@ -9,7 +9,7 @@ const openai = new OpenAIApi ({
 
 const instructionMessage: ChatCompletionMessageParam = {
     role: "system",
-    content: "Format response in html."
+    content: "You are a helpful assistant."
 }
 
 export async function POST(
