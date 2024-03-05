@@ -72,7 +72,7 @@ const ConversationPage = () => {
                                 messages.map((message, index) => (
                                     <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'
                                         }`}>
-                                        <div className={ cn("rounded-lg p-4 text-white min-w-md max-w-xl",
+                                        <div className={ cn("whitespace-pre-line rounded-lg p-4 text-white min-w-md max-w-xl",
                                             message.role === 'user' ? 'bg-violet-500' : 'bg-gray-800')}>
                                             {message.content}
                                         </div>

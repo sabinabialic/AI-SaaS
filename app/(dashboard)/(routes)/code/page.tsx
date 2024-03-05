@@ -66,7 +66,6 @@ const CodePage = () => {
                 bgColor="bg-blue-700/10" />
             <div className="container mx-auto">
                 <div className="flex flex-col-reverse h-[calc(100vh-260px)] overflow-auto">
-                    {/* <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text text-center py-3 font-bold text-6xl">ChatGPT</h1> */}
                     <div className="flex-grow p-6">
                         <div className="flex flex-col space-y-4">
                             {

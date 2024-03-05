@@ -1,10 +1,16 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import OpenAIApi from "openai";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 const openai = new OpenAIApi ({
     apiKey: process.env.OPEN_API_KEY
 });
+
+const instructionMessage: ChatCompletionMessageParam = {
+    role: "system",
+    content: "Format response in html."
+}
 
 export async function POST(
     req: Request
@@ -28,7 +34,7 @@ export async function POST(
 
         const response =  await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            messages
+            messages: [instructionMessage, ...messages],
         });
 
         console.log(response.choices[0].message);
