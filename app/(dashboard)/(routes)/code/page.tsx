@@ -5,20 +5,21 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import TypingAnimation from "@/components/typing-animation";
+import { cn } from "@/lib/utils";
 
 import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { MessageCircleIcon, ArrowRight } from "lucide-react";
+import { Code2Icon, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import { cn } from "@/lib/utils";
 
-const ConversationPage = () => {
+const CodePage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
 
@@ -42,7 +43,7 @@ const ConversationPage = () => {
 
             setMessages((current) => [...current, userMessage]);
 
-            const response = await axios.post("/api/conversation", {
+            const response = await axios.post("/api/code", {
                 messages: newMessages
             });
 
@@ -58,11 +59,11 @@ const ConversationPage = () => {
     return (
         <div>
             <Heading
-                title="Conversation"
-                description="Our most advanced conversation model"
-                icon={MessageCircleIcon}
-                iconColor="text-violet-500"
-                bgColor="bg-violet-500/10" />
+                title="Code Generation"
+                description="Generate code using descriptive text"
+                icon={Code2Icon}
+                iconColor="text-blue-700"
+                bgColor="bg-blue-700/10" />
             <div className="container mx-auto">
                 <div className="flex flex-col-reverse h-[calc(100vh-260px)] overflow-auto">
                     {/* <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text text-center py-3 font-bold text-6xl">ChatGPT</h1> */}
@@ -72,9 +73,20 @@ const ConversationPage = () => {
                                 messages.map((message, index) => (
                                     <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'
                                         }`}>
-                                        <div className={ cn("rounded-lg p-4 text-white min-w-md max-w-xl",
-                                            message.role === 'user' ? 'bg-violet-500' : 'bg-gray-800')}>
-                                            {message.content}
+                                        <div className={cn("rounded-lg p-4 text-white min-w-md max-w-full",
+                                            message.role === 'user' ? 'bg-blue-700' : 'bg-gray-800')}>
+                                            <ReactMarkdown components={{
+                                                pre: ({ node, ...props }) => (
+                                                    <div className="overflow-auto w-full my-2 bg-white/10 p-2 rounded-lg">
+                                                        <pre {...props} />
+                                                    </div>
+                                                ),
+                                                code: ({ node, ...props }) => (
+                                                    <code className="bg-black/10 rounded-lg p-1" {...props} />
+                                                )
+                                            }} className="text-sm overflow-hidden leading-7">
+                                                {message.content || ""}
+                                            </ReactMarkdown>
                                         </div>
                                     </div>
                                 ))
@@ -102,7 +114,7 @@ const ConversationPage = () => {
                                         <Input
                                             className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                                             disabled={isLoading}
-                                            placeholder="How do I find the slope of a line?"
+                                            placeholder="Simple toggle button using react"
                                             {...field} />
                                     </FormControl>
                                 </FormItem>
@@ -121,4 +133,4 @@ const ConversationPage = () => {
     );
 }
 
-export default ConversationPage;
+export default CodePage;
