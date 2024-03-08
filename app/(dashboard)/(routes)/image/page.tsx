@@ -3,6 +3,7 @@
 import { Heading } from "@/components/heading";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
 import TypingAnimation from "@/components/typing-animation";
@@ -11,7 +12,8 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { ImageIcon, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { ImageIcon, ArrowRight, Download } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { amountOptions, formSchema, resolutionOptions } from "./constants";
 import { useRouter } from "next/navigation";
@@ -151,6 +153,35 @@ const ImagePage = () => {
                             </Button>
                         </form>
                     </Form>
+                </div>
+                <div className="space-y-4 mt-4">
+                {
+                    isLoading &&
+                    <div key={images.length} className="flex justify-center">
+                        <div className="rounded-lg p-4 text-gray-800 max-w-sm">
+                            <TypingAnimation />
+                        </div>
+                    </div>
+                }
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+                    {images.map((src) => (
+                        <Card key={src} className="rounded-lg overflow-hidden">
+                            <div className="relative aspect-square">
+                                <Image
+                                    alt="Image"
+                                    fill
+                                    src={src}
+                                />
+                            </div>
+                            <CardFooter className="p-2">
+                                <Button onClick={() => (window.open(src))} variant="secondary" className="w-full">
+                                    <Download className="h-4 w-4 mr-2"/>
+                                    Download
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    ))}
                 </div>
             </div>
         </div>
